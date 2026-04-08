@@ -46,15 +46,8 @@ TASKS_TO_RUN = [
 
 
 # ─── Structured logging (required format) ─────────────────────────────────────
-
 def log_start(task: str, env: str, model: str) -> None:
-    print(json.dumps({
-        "type": "START",
-        "task": task,
-        "env": env,
-        "model": model,
-        "timestamp": time.time(),
-    }), flush=True)
+    print(f"[START] task={task} env={env} model={model}", flush=True)
 
 
 def log_step(
@@ -64,15 +57,14 @@ def log_step(
     done: bool,
     error: Optional[str],
 ) -> None:
-    print(json.dumps({
-        "type": "STEP",
-        "step": step,
-        "action": action[:200],  # truncate for readability
-        "reward": reward,
-        "done": done,
-        "error": error,
-        "timestamp": time.time(),
-    }), flush=True)
+    action_str = action.replace("\n", " ")[:200]  # keep single line
+    error_val = error if error else "null"
+    done_val = str(done).lower()
+
+    print(
+        f"[STEP] step={step} action={action_str} reward={reward:.2f} done={done_val} error={error_val}",
+        flush=True,
+    )
 
 
 def log_end(
@@ -81,15 +73,12 @@ def log_end(
     score: float,
     rewards: List[float],
 ) -> None:
-    print(json.dumps({
-        "type": "END",
-        "success": success,
-        "steps": steps,
-        "score": score,
-        "rewards": rewards,
-        "timestamp": time.time(),
-    }), flush=True)
+    rewards_str = ",".join(f"{r:.2f}" for r in rewards)
 
+    print(
+        f"[END] success={str(success).lower()} steps={steps} score={score:.2f} rewards={rewards_str}",
+        flush=True,
+    )
 
 # ─── Environment HTTP client ──────────────────────────────────────────────────
 

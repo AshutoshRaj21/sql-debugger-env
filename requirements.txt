@@ -3,3 +3,5 @@ uvicorn
 pydantic 
 sqlite-utils 
 pytest
+openai
+requests
