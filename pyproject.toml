@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sql-debugger-env"
+version = "0.1.0"
+description = "SQL Debugger OpenEnv environment"
+authors = [
+  { name="Ashutosh Raj" }
+]
+dependencies = [
+  "fastapi",
+  "uvicorn",
+  "pydantic"
+]
