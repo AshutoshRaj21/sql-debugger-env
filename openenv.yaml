@@ -1,0 +1,88 @@
+name: sql-query-debugger
+version: "1.0.0"
+description: >
+  A real-world environment where an AI agent debugs broken SQL queries.
+  The agent receives a schema, a broken query, and optionally a partial
+  error message, then must produce a corrected query. Graders execute
+  both the original and corrected query against an in-memory SQLite
+  database and score based on correctness, efficiency, and safety.
+author: sql-debugger-team
+tags:
+  - openenv
+  - sql
+  - debugging
+  - code-repair
+  - real-world
+
+observation_space:
+  type: object
+  description: Current environment state presented to the agent
+  properties:
+    schema_ddl:
+      type: string
+      description: CREATE TABLE statements defining the database schema
+    broken_query:
+      type: string
+      description: The SQL query containing one or more bugs
+    error_message:
+      type: string
+      description: Optional database error message from running the broken query
+    expected_description:
+      type: string
+      description: Natural language description of what the query should return
+    attempt_number:
+      type: integer
+      description: Current attempt (1-indexed), max 3 attempts per task
+    previous_attempts:
+      type: array
+      items:
+        type: string
+      description: List of previously submitted queries in this episode
+
+action_space:
+  type: object
+  description: Action the agent takes
+  properties:
+    fixed_query:
+      type: string
+      description: The corrected SQL query the agent believes is correct
+    explanation:
+      type: string
+      description: Optional explanation of what was wrong and what was fixed
+
+tasks:
+  - id: task_easy
+    name: Simple Syntax Fix
+    difficulty: easy
+    description: >
+      Fix single-error SQL queries: typos in keywords, missing clauses,
+      wrong column references. Schema is simple (1-2 tables).
+    max_steps: 3
+    reward_range: [0.0, 1.0]
+
+  - id: task_medium
+    name: Logic & Join Repair
+    difficulty: medium
+    description: >
+      Fix queries with logical errors: wrong JOIN types, incorrect
+      aggregation, broken WHERE conditions, GROUP BY mistakes.
+      Schema involves 3-4 related tables.
+    max_steps: 3
+    reward_range: [0.0, 1.0]
+
+  - id: task_hard
+    name: Complex Multi-Bug Queries
+    difficulty: hard
+    description: >
+      Fix queries with multiple simultaneous bugs: subquery errors,
+      window function mistakes, CTE issues, type coercion problems,
+      and performance anti-patterns. Schema has 5+ tables with complex
+      relationships.
+    max_steps: 3
+    reward_range: [0.0, 1.0]
+
+endpoints:
+  reset: POST /reset
+  step: POST /step
+  state: GET /state
+  health: GET /health
