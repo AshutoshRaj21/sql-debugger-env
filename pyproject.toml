@@ -6,11 +6,14 @@ build-backend = "setuptools.build_meta"
 name = "sql-debugger-env"
 version = "0.1.0"
 description = "SQL Debugger OpenEnv environment"
-authors = [
-  { name="Ashutosh Raj" }
-]
+authors = [{ name="Ashutosh Raj" }]
+
 dependencies = [
   "fastapi",
   "uvicorn",
-  "pydantic"
+  "pydantic",
+  "openenv-core>=0.2.0"
 ]
+
+[project.scripts]
+start = "server.app:main"
