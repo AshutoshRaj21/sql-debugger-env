@@ -5,3 +5,4 @@ sqlite-utils
 pytest
 openai
 requests
+uv
