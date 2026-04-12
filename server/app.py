@@ -54,7 +54,21 @@ class StepRequest(BaseModel):
 
 
 # ─── Endpoints ────────────────────────────────────────────────────────────────
-
+@app.get("/")
+def home():
+    return {
+        "message": "SQL Query Debugger!",
+        "status": "running",
+        "version": "1.0",
+        "endpoints": {
+            "health": "/health",
+            "reset": "/reset",
+            "step": "/step",
+            "state": "/state",
+            "tasks": "/tasks",
+            "docs": "/docs"
+        }
+    }
 @app.get("/health")
 async def health():
     return {"status": "ok", "env": "sql-query-debugger", "version": "1.0.0"}
