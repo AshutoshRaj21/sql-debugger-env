@@ -182,10 +182,11 @@ def grade(
     # Base: 80% result correctness + 20% for executing
     execution_score = 0.2  # just for running
     total = (result_score * 0.8 + execution_score) + eff_bonus - attempt_penalty
-    total = round(min(1.0, max(0.0, total)), 4)
+    EPS = 1e-6
+    total = max(EPS, min(1.0 - EPS, total))
 
     return Reward(
-        total=total,
+        total=EPS,
         executes=True,
         result_correct=round(result_score, 4),
         no_destructive_ops=True,
