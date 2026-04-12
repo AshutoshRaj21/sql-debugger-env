@@ -1,0 +1,86 @@
+#  Python
+
+**pycache**/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+#  Virtual Environment
+
+venv/
+.env/
+.venv/
+ENV/
+
+#  Environment Variables (IMPORTANT)
+
+.env
+.env.*
+*.env
+
+#  Logs
+
+*.log
+
+#  OS Files
+
+.DS_Store
+Thumbs.db
+
+#  IDE / Editor
+
+.vscode/
+.idea/
+*.swp
+*.swo
+
+#  Jupyter Notebook
+
+.ipynb_checkpoints/
+
+#  Pytest / Coverage
+
+.pytest_cache/
+.coverage
+htmlcov/
+
+#  Build / Distribution
+
+build/
+dist/
+*.egg-info/
+.eggs/
+
+#  Docker
+
+*.tar
+
+#  Hugging Face / Cache
+
+.cache/
+huggingface/
+hf_cache/
+
+#  Model files (optional – large files)
+
+*.bin
+*.pt
+*.pth
+
+#  Temporary files
+
+tmp/
+temp/
+*.tmp
+
+#  API keys / secrets
+
+secrets.json
+config.json
+
+#  Misc
+
+*.sqlite3
+*.db
+
